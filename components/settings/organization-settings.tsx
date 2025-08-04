@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -10,15 +10,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Save, Upload, Trash2, Plus, AlertTriangle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { useOrganization } from "@/lib/providers/organization-provider"
 
 export function OrganizationSettings() {
   const { toast } = useToast()
+  const { currentOrganization } = useOrganization()
   const [organization, setOrganization] = useState({
-    name: "Wakademy Corp",
+    name: currentOrganization?.name || "",
     type: "enterprise",
     description: "Plateforme de formation et de partage de connaissances pour les entreprises modernes.",
     website: "https://wakademy.com",
   })
+
+  useEffect(() => {
+    if (currentOrganization) {
+      setOrganization((prev) => ({ ...prev, name: currentOrganization.name }))
+    }
+  }, [currentOrganization])
 
   const [groups, setGroups] = useState([
     { id: 1, name: "Direction", members: 5, color: "blue" },

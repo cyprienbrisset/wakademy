@@ -1,5 +1,6 @@
 import React from "react"
 import { ThemeProvider } from "@/components/theme-provider"
+import { OrganizationProvider } from "@/lib/providers/organization-provider"
 import "./globals.css"
 import { headers } from "next/headers"
 
@@ -106,10 +107,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} storageKey="wakademy-theme">
-          <div className="relative flex min-h-screen flex-col">
-            {/* Nous ne réservons plus d'espace ici car c'est géré dans les layouts enfants */}
-            {children}
-          </div>
+          <OrganizationProvider>
+            <div className="relative flex min-h-screen flex-col">
+              {/* Nous ne réservons plus d'espace ici car c'est géré dans les layouts enfants */}
+              {children}
+            </div>
+          </OrganizationProvider>
         </ThemeProvider>
       </body>
     </html>

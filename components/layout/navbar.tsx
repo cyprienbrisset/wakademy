@@ -26,6 +26,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { OrganizationSwitcher } from "@/components/organization-switcher"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -123,6 +124,7 @@ function NavbarComponent() {
               Wakademy
             </span>
           </Link>
+          <OrganizationSwitcher />
         </div>
 
         {/* Search Bar - Desktop */}
