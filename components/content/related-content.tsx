@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, RefreshCw } from "lucide-react"
@@ -65,7 +65,7 @@ export default function RelatedContent({ contentId, category }: RelatedContentPr
   const [error, setError] = useState<string | null>(null)
   const [retryCount, setRetryCount] = useState(0)
 
-  const fetchRelatedContent = async () => {
+  const fetchRelatedContent = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
@@ -102,11 +102,11 @@ export default function RelatedContent({ contentId, category }: RelatedContentPr
     } finally {
       setLoading(false)
     }
-  }
+  }, [contentId, category])
 
   useEffect(() => {
     fetchRelatedContent()
-  }, [contentId, category, retryCount])
+  }, [fetchRelatedContent, retryCount])
 
   const handleRetry = () => {
     setRetryCount((prev) => prev + 1)
