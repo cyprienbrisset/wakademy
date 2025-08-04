@@ -11,7 +11,19 @@ VALUES (
   'content',
   false,
   104857600, -- 100MB
-  ARRAY['video/mp4', 'video/webm', 'audio/mpeg', 'audio/wav', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+  ARRAY[
+    'video/*',
+    'audio/*',
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'image/*',
+    'text/*'
+  ]
 );
 
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
