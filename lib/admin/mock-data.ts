@@ -206,6 +206,107 @@ export function getContentSatisfactionData(timeFilter: "7d" | "30d" | "90d") {
   }
 }
 
+// Données supplémentaires pour le tableau de bord d'administration
+
+export function getPlaylistsData(timeFilter: "7d" | "30d" | "90d") {
+  return {
+    totalPlaylists: 42,
+    sharedPlaylists: 17,
+  }
+}
+
+export function getContentCreatorsData(timeFilter: "7d" | "30d" | "90d") {
+  return {
+    activeCreators: 8,
+    newContent: 5,
+    topCreators: [
+      {
+        name: "Alice",
+        department: "Marketing",
+        contentCount: 12,
+        avgRating: 4.5,
+        popularityScore: 80,
+        totalViews: 1234,
+        completionRate: 85,
+        lastContentDate: "2024-06-01",
+      },
+    ],
+  }
+}
+
+export function getPendingPublicationsData() {
+  return [
+    {
+      title: "Nouvelle vidéo de formation",
+      type: "Vidéo",
+      duration: "15 min",
+      status: "en attente",
+      description: "Introduction au leadership",
+      author: "Bob",
+      submittedDate: "2024-06-02",
+    },
+  ]
+}
+
+export function getSystemAlertsData() {
+  return [
+    {
+      severity: "low",
+      title: "Maintenance planifiée",
+      message: "Une maintenance est prévue cette nuit",
+      timestamp: "2024-06-05 22:00",
+    },
+  ]
+}
+
+export function getAdminLogsData() {
+  return [
+    {
+      id: 1,
+      timestamp: "2024-06-01 10:00",
+      admin: "Alice",
+      action: "upload",
+      actionLabel: "Upload",
+      description: "Ajout d'une nouvelle vidéo",
+      ip: "192.168.0.1",
+    },
+  ]
+}
+
+export function getUserProgressData(timeFilter: "7d" | "30d" | "90d") {
+  return {
+    avgProgress: 65,
+    avgContentViewed: 12,
+    totalBadgesEarned: 34,
+    progressByDepartment: [
+      { department: "Marketing", avgProgress: 70, avgContentViewed: 15 },
+      { department: "Ventes", avgProgress: 60, avgContentViewed: 10 },
+      { department: "Ingénierie", avgProgress: 55, avgContentViewed: 8 },
+    ],
+  }
+}
+
+export function getMostEngagedUsersData(timeFilter: "7d" | "30d" | "90d") {
+  return [
+    {
+      name: "Charlie",
+      email: "charlie@example.com",
+      department: "Marketing",
+      contentViewed: 25,
+      engagementScore: 90,
+      progressPercentage: 80,
+      badges: ["Expert", "Pionnier"],
+    },
+  ]
+}
+
+export function getUserActivityData(timeFilter: "7d" | "30d" | "90d") {
+  return [
+    { date: "2024-06-01", activeUsers: 50, contentViews: 200, completions: 40 },
+    { date: "2024-06-02", activeUsers: 45, contentViews: 180, completions: 35 },
+  ]
+}
+
 // Fonction utilitaire pour générer des données aléatoires (pour les tests)
 export function generateRandomData(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -359,234 +460,3 @@ export function getAIContentData(timeFilter: "7d" | "30d" | "90d") {
   }
 }
 
-// Ajouter la fonction getMostEngagedUsersData à la fin du fichier
-
-export function getMostEngagedUsersData(timeFilter: "7d" | "30d" | "90d") {
-  const baseData = {
-    totalEngagementHours: 0,
-    avgEngagementPerUser: 0,
-    mostEngagedUsers: [] as Array<{
-      id: string
-      name: string
-      email: string
-      role: string
-      department: string
-      contentViewed: number
-      hoursSpent: number
-      completionRate: number
-      lastActive: string
-    }>,
-    userEngagementOverTime: [] as Array<{ date: string; engagementHours: number }>,
-  }
-
-  switch (timeFilter) {
-    case "7d":
-      return {
-        totalEngagementHours: 1243,
-        avgEngagementPerUser: 2.8,
-        mostEngagedUsers: [
-          {
-            id: "u1",
-            name: "Sophie Martin",
-            email: "s.martin@example.com",
-            role: "Responsable RH",
-            department: "Ressources Humaines",
-            contentViewed: 32,
-            hoursSpent: 12.5,
-            completionRate: 92,
-            lastActive: "Aujourd'hui",
-          },
-          {
-            id: "u2",
-            name: "Thomas Dubois",
-            email: "t.dubois@example.com",
-            role: "Chef de Projet",
-            department: "Innovation",
-            contentViewed: 28,
-            hoursSpent: 10.2,
-            completionRate: 87,
-            lastActive: "Aujourd'hui",
-          },
-          {
-            id: "u3",
-            name: "Émilie Bernard",
-            email: "e.bernard@example.com",
-            role: "Directrice Marketing",
-            department: "Marketing",
-            contentViewed: 25,
-            hoursSpent: 9.7,
-            completionRate: 85,
-            lastActive: "Hier",
-          },
-          {
-            id: "u4",
-            name: "Lucas Petit",
-            email: "l.petit@example.com",
-            role: "Analyste",
-            department: "Finance",
-            contentViewed: 21,
-            hoursSpent: 8.4,
-            completionRate: 82,
-            lastActive: "Hier",
-          },
-          {
-            id: "u5",
-            name: "Camille Leroy",
-            email: "c.leroy@example.com",
-            role: "Développeuse",
-            department: "IT",
-            contentViewed: 18,
-            hoursSpent: 7.8,
-            completionRate: 79,
-            lastActive: "Il y a 2 jours",
-          },
-        ],
-        userEngagementOverTime: [
-          { date: "Lun", engagementHours: 143 },
-          { date: "Mar", engagementHours: 187 },
-          { date: "Mer", engagementHours: 213 },
-          { date: "Jeu", engagementHours: 198 },
-          { date: "Ven", engagementHours: 176 },
-          { date: "Sam", engagementHours: 132 },
-          { date: "Dim", engagementHours: 194 },
-        ],
-      }
-    case "30d":
-      return {
-        totalEngagementHours: 5376,
-        avgEngagementPerUser: 12.3,
-        mostEngagedUsers: [
-          {
-            id: "u1",
-            name: "Sophie Martin",
-            email: "s.martin@example.com",
-            role: "Responsable RH",
-            department: "Ressources Humaines",
-            contentViewed: 124,
-            hoursSpent: 48.7,
-            completionRate: 94,
-            lastActive: "Aujourd'hui",
-          },
-          {
-            id: "u2",
-            name: "Thomas Dubois",
-            email: "t.dubois@example.com",
-            role: "Chef de Projet",
-            department: "Innovation",
-            contentViewed: 112,
-            hoursSpent: 43.2,
-            completionRate: 89,
-            lastActive: "Aujourd'hui",
-          },
-          {
-            id: "u3",
-            name: "Émilie Bernard",
-            email: "e.bernard@example.com",
-            role: "Directrice Marketing",
-            department: "Marketing",
-            contentViewed: 98,
-            hoursSpent: 38.5,
-            completionRate: 87,
-            lastActive: "Hier",
-          },
-          {
-            id: "u4",
-            name: "Lucas Petit",
-            email: "l.petit@example.com",
-            role: "Analyste",
-            department: "Finance",
-            contentViewed: 89,
-            hoursSpent: 34.8,
-            completionRate: 84,
-            lastActive: "Hier",
-          },
-          {
-            id: "u5",
-            name: "Camille Leroy",
-            email: "c.leroy@example.com",
-            role: "Développeuse",
-            department: "IT",
-            contentViewed: 76,
-            hoursSpent: 31.2,
-            completionRate: 82,
-            lastActive: "Aujourd'hui",
-          },
-        ],
-        userEngagementOverTime: [
-          { date: "Sem 1", engagementHours: 1234 },
-          { date: "Sem 2", engagementHours: 1456 },
-          { date: "Sem 3", engagementHours: 1345 },
-          { date: "Sem 4", engagementHours: 1341 },
-        ],
-      }
-    case "90d":
-      return {
-        totalEngagementHours: 16543,
-        avgEngagementPerUser: 37.8,
-        mostEngagedUsers: [
-          {
-            id: "u1",
-            name: "Sophie Martin",
-            email: "s.martin@example.com",
-            role: "Responsable RH",
-            department: "Ressources Humaines",
-            contentViewed: 376,
-            hoursSpent: 142.3,
-            completionRate: 95,
-            lastActive: "Aujourd'hui",
-          },
-          {
-            id: "u2",
-            name: "Thomas Dubois",
-            email: "t.dubois@example.com",
-            role: "Chef de Projet",
-            department: "Innovation",
-            contentViewed: 345,
-            hoursSpent: 131.7,
-            completionRate: 91,
-            lastActive: "Aujourd'hui",
-          },
-          {
-            id: "u3",
-            name: "Émilie Bernard",
-            email: "e.bernard@example.com",
-            role: "Directrice Marketing",
-            department: "Marketing",
-            contentViewed: 312,
-            hoursSpent: 118.9,
-            completionRate: 89,
-            lastActive: "Hier",
-          },
-          {
-            id: "u4",
-            name: "Lucas Petit",
-            email: "l.petit@example.com",
-            role: "Analyste",
-            department: "Finance",
-            contentViewed: 287,
-            hoursSpent: 106.4,
-            completionRate: 86,
-            lastActive: "Aujourd'hui",
-          },
-          {
-            id: "u5",
-            name: "Camille Leroy",
-            email: "c.leroy@example.com",
-            role: "Développeuse",
-            department: "IT",
-            contentViewed: 254,
-            hoursSpent: 94.8,
-            completionRate: 84,
-            lastActive: "Hier",
-          },
-        ],
-        userEngagementOverTime: [
-          { date: "Mois 1", engagementHours: 5234 },
-          { date: "Mois 2", engagementHours: 5678 },
-          { date: "Mois 3", engagementHours: 5631 },
-        ],
-      }
-    default:
-      return baseData
-  }
-}

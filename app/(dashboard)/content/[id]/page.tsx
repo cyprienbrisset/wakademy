@@ -3,8 +3,12 @@ import ContentPageClient from "@/components/content/content-page-client"
 import { getContentById } from "@/lib/content/content-service"
 
 // Cette page utilise le layout dashboard qui inclut la Navbar
-export default async function ContentPage({ params }: { params: { id: string } }) {
-  const { id } = params
+export default async function ContentPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
   console.log("Fetching content with ID:", id)
 
   try {

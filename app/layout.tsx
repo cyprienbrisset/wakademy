@@ -62,9 +62,13 @@ export const viewport = {
   userScalable: true,
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const headersList = headers()
-  const pathname =  headersList.get("x-pathname") || "/"
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const headersList = await headers()
+  const pathname = headersList.get("x-pathname") || "/"
   const isHomePage = pathname === "/"
 
   return (

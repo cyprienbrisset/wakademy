@@ -130,8 +130,8 @@ export default function AudioTroubleshooter({ content }: AudioTroubleshooterProp
   }, [audioUrl])
 
   // Load audio buffer for Web Audio API
-  const loadAudioBuffer = async () => {
-    if (!audioContext || !audioUrl) return
+  const loadAudioBuffer = async (): Promise<AudioBuffer | null> => {
+    if (!audioContext || !audioUrl) return null
 
     try {
       setIsLoading(true)
