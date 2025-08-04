@@ -4,13 +4,13 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Loader2, Info, CheckCircle } from "lucide-react"
 import { createAdminUser } from "@/lib/setup/database-actions"
+import { login } from "@/lib/auth"
 
 interface SetupAdminFormProps {
   adminExists?: boolean
@@ -47,18 +47,14 @@ export function SetupAdminForm({ adminExists = false }: SetupAdminFormProps) {
         const userIdMatch = result.details?.match(/ID: ([a-f0-9-]+)/)
         const userId = userIdMatch ? userIdMatch[1] : null
 
-        // Stocker les informations admin dans localStorage pour la gestion de session
-        localStorage.setItem(
-          "wakademy_admin",
-          JSON.stringify({
-            email,
-            role: "admin",
-            id: userId,
-            firstName,
-            lastName,
-            isAuthenticated: true,
-          }),
-        )
+        // Stocker les informations admin et synchroniser l'authentification
+        login({
+          email,
+          role: "admin",
+          id: userId,
+          firstName,
+          lastName,
+        })
 
         setStep("success")
         setSuccess(true)
