@@ -1,10 +1,9 @@
 "use client"
 
-import { useState } from "react"
 import { X } from "lucide-react"
-import { VideoPlayer } from "./video-player"
-import { PodcastPlayer } from "./podcast-player"
-import { DocumentViewer } from "./document-viewer"
+import VideoPlayer from "./video-player"
+import PodcastPlayer from "./podcast-player"
+import DocumentViewer from "./document-viewer"
 import { Button } from "@/components/ui/button"
 
 interface Content {
@@ -20,7 +19,6 @@ interface ContentModalProps {
 }
 
 export function ContentModal({ content, onClose }: ContentModalProps) {
-  const [isLoading, setIsLoading] = useState(true)
 
   // This would fetch the full content details from the API
   const contentDetails = {
@@ -42,11 +40,11 @@ export function ContentModal({ content, onClose }: ContentModalProps) {
   const renderContentPlayer = () => {
     switch (content.type) {
       case "video":
-        return <VideoPlayer url={contentDetails.url} onLoadComplete={() => setIsLoading(false)} />
+        return <VideoPlayer src={contentDetails.url} contentId={content.id} />
       case "podcast":
-        return <PodcastPlayer url={contentDetails.url} onLoadComplete={() => setIsLoading(false)} />
+        return <PodcastPlayer content={contentDetails} />
       case "document":
-        return <DocumentViewer url={contentDetails.url} onLoadComplete={() => setIsLoading(false)} />
+        return <DocumentViewer src={contentDetails.url} />
       default:
         return null
     }

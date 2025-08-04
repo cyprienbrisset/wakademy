@@ -21,33 +21,24 @@ export default function AudioPlayerWrapper({
   coverArt,
   contentId,
 }: AudioPlayerWrapperProps) {
-  // Vérifier si l'URL est valide
-  if (!src || src.trim() === "") {
-    return (
-      <Alert className="bg-yellow-50 border-yellow-200">
-        <AlertCircle className="h-4 w-4 text-yellow-600" />
-        <AlertDescription className="text-yellow-800">
-          <strong>Audio non disponible</strong>
-          <br />
-          L'URL du fichier audio est manquante ou invalide pour ce contenu.
-        </AlertDescription>
-      </Alert>
-    )
-  }
+  const invalidSrc = !src || src.trim() === ""
 
   // Fonction côté client pour sauvegarder la progression
-  const handleProgress = useCallback(async (time: number, duration: number) => {
-    try {
-      await saveContentProgress({
-        content_id: contentId,
-        current_position: time,
-        duration: duration,
-        is_completed: time >= duration * 0.95,
-      })
-    } catch (error) {
-      console.error("Error saving progress:", error)
-    }
-  }, [contentId])
+  const handleProgress = useCallback(
+    async (time: number, duration: number) => {
+      try {
+        await saveContentProgress({
+          content_id: contentId,
+          current_position: time,
+          duration: duration,
+          is_completed: time >= duration * 0.95,
+        })
+      } catch (error) {
+        console.error("Error saving progress:", error)
+      }
+    },
+    [contentId]
+  )
 
   // Fonction côté client pour marquer comme terminé
   const handleComplete = useCallback(async () => {
@@ -63,6 +54,20 @@ export default function AudioPlayerWrapper({
     }
   }, [contentId])
 
+  // Vérifier si l'URL est valide
+  if (invalidSrc) {
+    return (
+      <Alert className="bg-yellow-50 border-yellow-200">
+        <AlertCircle className="h-4 w-4 text-yellow-600" />
+        <AlertDescription className="text-yellow-800">
+          <strong>Audio non disponible</strong>
+          <br />
+          L'URL du fichier audio est manquante ou invalide pour ce contenu.
+        </AlertDescription>
+      </Alert>
+    )
+  }
+
   return (
     <AudioPlayer
       src={src}
@@ -74,4 +79,4 @@ export default function AudioPlayerWrapper({
       onComplete={handleComplete}
     />
   )
-} 
+}

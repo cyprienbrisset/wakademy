@@ -32,7 +32,7 @@ export default function PodcastPlayer({ content }: PodcastPlayerProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [audioUrl, setAudioUrl] = useState<string | null>(null)
   const [isLoadingUrl, setIsLoadingUrl] = useState(false)
-  const [debugInfo, setDebugInfo] = useState<any>({})
+  const [debugInfo, setDebugInfo] = useState<Record<string, any>>({})
   const [useFallback, setUseFallback] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
   const [lastSavedPosition, setLastSavedPosition] = useState(0)
@@ -89,7 +89,7 @@ export default function PodcastPlayer({ content }: PodcastPlayerProps) {
         const progress = await getContentProgress(contentId)
 
         if (progress) {
-          setDebugInfo((prev) => ({ ...prev, loadedProgress: progress }))
+          setDebugInfo((prev: any) => ({ ...prev, loadedProgress: progress }))
 
           // Ne pas définir currentTime directement ici, car l'audio n'est peut-être pas encore chargé
           // On le fera après le chargement de l'audio
