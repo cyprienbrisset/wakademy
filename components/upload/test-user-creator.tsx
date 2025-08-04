@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
-import { isAuthenticated, getUser } from "@/lib/auth"
+import { isAuthenticated, getUser, login } from "@/lib/auth"
 
 export default function TestUserCreator() {
   const [isCreating, setIsCreating] = useState(false)
@@ -19,16 +19,15 @@ export default function TestUserCreator() {
     setIsCreating(true)
 
     try {
-      // Créer un utilisateur de test dans localStorage
+      // Créer un utilisateur de test et synchroniser l'état d'authentification
       const testUser = {
         id: "test-user-" + Date.now(),
         email: "test@example.com",
         name: "Utilisateur Test",
-        isAuthenticated: true,
         role: "admin",
       }
 
-      localStorage.setItem("wakademy_admin", JSON.stringify(testUser))
+      login(testUser)
 
       // Recharger la page pour appliquer les changements
       window.location.reload()

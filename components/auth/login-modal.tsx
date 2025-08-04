@@ -6,6 +6,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { createClient } from "@/lib/supabase/client"
+import { login } from "@/lib/auth"
 import {
   Dialog,
   DialogContent,
@@ -74,18 +75,14 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
         throw new Error("Accès non autorisé. Seuls les administrateurs peuvent se connecter.")
       }
 
-      // Store user info in localStorage for session management
-      localStorage.setItem(
-        "wakademy_admin",
-        JSON.stringify({
-          email: authData.user.email,
-          role: profile.role,
-          id: authData.user.id,
-          firstName: profile.first_name,
-          lastName: profile.last_name,
-          isAuthenticated: true,
-        }),
-      )
+      // Store user info and sync authentication state
+      login({
+        email: authData.user.email,
+        role: profile.role,
+        id: authData.user.id,
+        firstName: profile.first_name,
+        lastName: profile.last_name,
+      })
 
       // Close modal and redirect to dashboard
       onClose()
