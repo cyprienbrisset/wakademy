@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -28,7 +28,16 @@ export function PerformanceMonitor() {
   const [isVisible, setIsVisible] = useState(false)
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date())
 
-  const collectMetrics = () => {
+  const getApiResponseTimes = useCallback((): Record<string, number> => {
+    // En production, ceci serait collecté depuis les vraies requêtes
+    return {
+      '/api/trending': Math.random() * 200 + 50,
+      '/api/library': Math.random() * 300 + 100,
+      '/api/content': Math.random() * 150 + 75
+    }
+  }, [])
+
+  const collectMetrics = useCallback(() => {
     try {
       const cacheStats = performanceCache.getStats()
       const connectionStats = getConnectionStats()
@@ -54,17 +63,7 @@ export function PerformanceMonitor() {
     } catch (error) {
       console.warn('Erreur lors de la collecte des métriques:', error)
     }
-  }
-
-  // Simuler la collecte des temps de réponse API
-  const getApiResponseTimes = (): Record<string, number> => {
-    // En production, ceci serait collecté depuis les vraies requêtes
-    return {
-      '/api/trending': Math.random() * 200 + 50,
-      '/api/library': Math.random() * 300 + 100,
-      '/api/content': Math.random() * 150 + 75
-    }
-  }
+  }, [getApiResponseTimes])
 
   useEffect(() => {
     // Collecter les métriques au montage
@@ -74,7 +73,7 @@ export function PerformanceMonitor() {
     const interval = setInterval(collectMetrics, 5000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [collectMetrics])
 
   // Raccourci clavier pour afficher/masquer le moniteur
   useEffect(() => {
